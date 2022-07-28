@@ -56,29 +56,33 @@ router.put("/:id/add_favourites", (req, res, next) => {
   const id = req.params.id;
   Users.findByPk(id)
     .then((user) => {
-      user.favourites.push(req.body);
-      Users.update(
-        { favourites: user.favourites },
-        { where: { id: id }, returning: true }
-      )
-        .then((data) => res.send(data[1][0].favourites))
+      const movie=user.favourites.find((movie)=> movie.id===req.body.id? true:false)
+      // console.log(user.favourites.includes(req.body.id))
+      if (!movie){
+        user.favourites.push(req.body);
+        Users.update(
+          { favourites: user.favourites },
+          { where: { id: id }, returning: true }
+          )
+          .then((data) => res.send(data[1][0].favourites))
+          .catch(next);}
+        })
         .catch(next);
-    })
-    .catch(next);
-});
-
-router.put("/:id/delete_favourites", (req, res, next) => {
-  const id = req.params.id;
-  Users.findByPk(id)
-    .then((user) => {
-      const index = user.favourites.findIndex((f) => f.id === req.body.id);
+      });
+      
+      router.put("/:id/delete_favourites", (req, res, next) => {
+        const id = req.params.id;
+        Users.findByPk(id)
+        .then((user) => {
+          const index = user.favourites.findIndex((f) => f.id === req.body.id);
+          if(index!=-1){
       user.favourites.splice(index, 1);
       Users.update(
         { favourites: user.favourites },
         { where: { id: id }, returning: true }
       )
         .then((data) => res.send(data[1][0].favourites))
-        .catch(next);
+        .catch(next);}
     })
     .catch(next);
 });

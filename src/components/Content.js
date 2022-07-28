@@ -6,9 +6,9 @@ import { AuthContext } from "../store/context/AuthContext";
 
 const Content = () => {
   const { id, media } = useParams();
-  const { user } = useContext(AuthContext);
+ 
   const [data, setData] = useState({});
-  const { userid } = useParams();
+
 
   useEffect(() => {
     axios
@@ -17,19 +17,7 @@ const Content = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const addToFavourites = (item) => {
-    axios
-      .put(`/api/users/${user.id}/add_favourites`, item)
-      .then((result) => alert("Added to your collection successfully"))
-      .catch((err) => console.log(err));
-  };
-
-  const deleteFromFavourites = (item) => {
-    axios
-      .put(`/api/users/${user.id}/delete_favourites`, item)
-      .then((result) => alert("Added to your collection successfully"))
-      .catch((err) => console.log(err));
-  };
+  
 
   return (
     <>
@@ -47,12 +35,7 @@ const Content = () => {
               <strong>{data.original_title || data.name}</strong>
             </h1>
           </div>
-          <div className="media-left">
-            {user && <FaHeart onClick={() => addToFavourites(data)} />}
-          </div>
-          <div className="media-right">
-            {userid && <FaTrash onClick={() => deleteFromFavourites(data)} />}
-          </div>
+         
           <article className="media">
             <div className="media-content">
               <div className="content">

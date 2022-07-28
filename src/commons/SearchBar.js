@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import UserProfile from "../components/UserProfile";
 import { useLocation } from "react-router-dom";
 
-const SearchBar = () => {
+const SearchBar = ({setFavs}) => {
   const { pathname } = useLocation();
   console.log(
     "🚀 ~ file: SearchBar.js ~ line 12 ~ SearchBar ~ location",
@@ -17,7 +17,7 @@ const SearchBar = () => {
   const [result, setResult] = useState([]);
   const [trends, setTrends] = useState([]);
   const [media, setMedia] = useState("");
-
+  
   useEffect(
     () =>
       axios
@@ -117,7 +117,7 @@ const SearchBar = () => {
       </form>
       {pathname === "/"&& (<h1 class="subtitle thecolor" style={{fontWeight:700, fontSize:"34px" , marginLeft:"3em", marginTop:"2em"}}>Trends of the day</h1>)}
       {Array.isArray(result) ? (
-        <MovieListItem movies={pathname === "/" ? trends : result} />
+        <MovieListItem movies={pathname === "/" ? trends : result} setFavs={setFavs}/>
       ) : (
         <UserProfile user={result} />
       )}
