@@ -22,7 +22,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
     "redux": "^4.2.0",
-    "sequelize": "^6.20.0",
+    "sequelize": "^6.28.2",
     "sweetalert": "^2.1.2",
     "volleyball": "^1.5.1"
   },
